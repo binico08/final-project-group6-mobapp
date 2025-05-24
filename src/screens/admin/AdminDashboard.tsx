@@ -10,6 +10,7 @@ import {
   Image,
   Alert,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useUser } from '../../context/UserContext';
 import { useTheme } from '../../styles/ThemeContext';
 import createStyles from '../../styles/AllStyles';
@@ -72,7 +73,7 @@ const AdminDashboard = ({ navigation }) => {
   };
 
   return (
-    <View style={[styles.container, local.container, { backgroundColor: theme.background }]}>
+    <SafeAreaView style={[styles.container, local.container, { backgroundColor: theme.background }]}>
       <View style={local.topBar}>
         <Text style={[styles.title, { marginBottom: 0 }]}>Dashboard</Text>
         <View style={local.iconsRight}>
@@ -260,16 +261,16 @@ const AdminDashboard = ({ navigation }) => {
         >
           <View style={[local.modalContent, { backgroundColor: theme.surface }]}>
             {/* Notifications menu item */}
-            <TouchableOpacity
-              onPress={() => {
-                setMenuVisible(false);
-                navigation.navigate('NotificationsScreen');
-              }}
-              style={local.menuItem}
-            >
-              <MaterialCommunityIcons name="bell" size={20} color={theme.primary} />
-              <Text style={[local.menuText, { color: theme.text }]}>Notifications</Text>
-            </TouchableOpacity>
+<TouchableOpacity
+  onPress={() => {
+    setMenuVisible(false);
+    navigation.push('NotificationsScreen');
+  }}
+  style={local.menuItem}
+>
+  <MaterialCommunityIcons name="bell" size={20} color={theme.primary} />
+  <Text style={[local.menuText, { color: theme.text }]}>Notifications</Text>
+</TouchableOpacity>
 
             <TouchableOpacity
               onPress={() => {
@@ -284,7 +285,7 @@ const AdminDashboard = ({ navigation }) => {
           </View>
         </TouchableOpacity>
       </Modal>
-    </View>
+    </SafeAreaView>
   );
 };
 
