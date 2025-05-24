@@ -29,20 +29,35 @@ const BorrowForm = ({ navigation, route }) => {
   const [showReturnPicker, setShowReturnPicker] = useState(false);
 
   const formatDate = (date) => {
-    return date.toLocaleString(); // You can customize this format if needed
+    // Format date as 'YYYY-MM-DD HH:mm'
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const day = date.getDate().toString().padStart(2, '0');
+    const hours = date.getHours().toString().padStart(2, '0');
+    const minutes = date.getMinutes().toString().padStart(2, '0');
+    return `${year}-${month}-${day} ${hours}:${minutes}`;
   };
 
   const onBorrowDateChange = (event, selectedDate) => {
     setShowBorrowPicker(false);
     if (selectedDate) {
       setBorrowDate(selectedDate);
+      // If returnDate is before borrowDate, reset returnDate to borrowDate
+      if (returnDate < selectedDate) {
+        setReturnDate(selectedDate);
+      }
     }
   };
 
   const onReturnDateChange = (event, selectedDate) => {
     setShowReturnPicker(false);
     if (selectedDate) {
-      setReturnDate(selectedDate);
+      // Only set returnDate if it is after or equal to borrowDate
+      if (selectedDate >= borrowDate) {
+        setReturnDate(selectedDate);
+      } else {
+        alert('Return date cannot be before borrow date.');
+      }
     }
   };
 
@@ -107,6 +122,7 @@ const BorrowForm = ({ navigation, route }) => {
             mode="datetime"
             display="default"
             onChange={onBorrowDateChange}
+            minimumDate={new Date()}
           />
         )}
 
@@ -121,6 +137,7 @@ const BorrowForm = ({ navigation, route }) => {
             mode="datetime"
             display="default"
             onChange={onReturnDateChange}
+            minimumDate={borrowDate}
           />
         )}
 

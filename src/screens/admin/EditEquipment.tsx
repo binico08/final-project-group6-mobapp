@@ -64,6 +64,11 @@ const EditEquipment = () => {
 
   const formattedDate = date.toISOString().slice(0, 10);
 
+  // Format date for display as YYYY-MM-DD
+  const formatDate = (date) => {
+    return date.toISOString().slice(0, 10);
+  };
+
   const handleUpdate = () => {
     if (!name.trim() || !description.trim() || !price.trim()) {
       Alert.alert('Error', 'Please fill in all fields');
@@ -189,12 +194,12 @@ const EditEquipment = () => {
         />
       )}
 
-      <TouchableOpacity
-        style={[local.saveBtn, { backgroundColor: theme.primary }]}
-        onPress={handleUpdate}
-      >
-        <Text style={local.saveText}>Save Changes</Text>
-      </TouchableOpacity>
+  <TouchableOpacity
+    style={[local.saveBtn, { backgroundColor: theme.primary }]}
+    onPress={handleUpdate}
+  >
+    <Text style={local.saveText}>Save Changes</Text>
+  </TouchableOpacity>
     </View>
   );
 };
